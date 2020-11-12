@@ -21,8 +21,9 @@ import Button from '@material-ui/core/Button';
 function descendingComparator(a, b, orderBy) {
   let x = a[orderBy]
   let y = b[orderBy]
-  
-  if (!orderBy.includes('metric')) {
+//   console.log("orderB")
+//   console.log(orderBy == 'playCount')
+  if (! orderBy.includes('metric') && orderBy !== 'playCount') {
     x = x.toUpperCase();
     y = y.toUpperCase();
   }
