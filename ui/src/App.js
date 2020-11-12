@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar';
 import TablePage from './views/TablePage';
 import LandingPage from './views/LandingPage';
  
