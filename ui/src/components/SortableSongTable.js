@@ -3,7 +3,6 @@ import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import Table from '@material-ui/core/Table';
-import Moment from 'moment';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -20,10 +19,23 @@ import Button from '@material-ui/core/Button';
 
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
+  let x = a[orderBy]
+  let y = b[orderBy]
+  
+  if (!orderBy.includes('metric')) {
+    x = x.toUpperCase();
+    y = y.toUpperCase();
+  }
+  
+  if (orderBy == 'songReleaseDate') {
+        x = new Date(a[orderBy]); 
+        y = new Date(b[orderBy]); 
+  }
+
+  if (y < x) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (y > x) {
     return 1;
   }
   return 0;
@@ -108,6 +120,7 @@ SortableTableHead.propTypes = {
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired,
 };
 
 const useToolbarStyles = makeStyles((theme) => ({
@@ -277,8 +290,8 @@ export default function EnhancedTable(data) {
                             id={labelId} 
                             scope="row" 
                             align='center'
-                    >
-                        {key == 'songReleaseDate' ?  row[key] :  row[key] }
+                        >
+                            {row[key]}
                         </TableCell>
                     ))}
                     </TableRow>
