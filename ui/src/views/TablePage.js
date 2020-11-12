@@ -1,16 +1,7 @@
 import React from 'react';
-
 import { makeStyles } from '@material-ui/core/styles';
-
 import useSongFetch from '../hooks/GetSongList';
-import SongTable from '../components/SongTable';
 import SortableSongTable from '../components/SortableSongTable';
-
-
-function createData(name, code, population, size) {
-  const density = population / size;
-  return { name, code, population, size, density };
-}
 
 
 const useStyles = makeStyles({
@@ -32,10 +23,12 @@ export default function DataTable() {
   return (
     <div className={classes.container}>
     {(data.length > 0)
-      ?  
+        ?  
         <SortableSongTable songs={data}/>
         : 
-        "Loading Data"
+        <div style={{align:'center', paddingLeft:'45%', paddingTop:'20%'}}>
+          <h3>Loading Data</h3>
+        </div>
       }
     </div>
   );

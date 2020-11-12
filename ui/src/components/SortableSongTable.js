@@ -1,10 +1,9 @@
-import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
 import Table from '@material-ui/core/Table';
+import Moment from 'moment';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -13,10 +12,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -72,8 +68,8 @@ const headCells = [
     { id: 'metricP', numeric: true, disablePadding: false, label: 'metricP'},
 ];
 
-function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} = props;
+function SortableTableHead(props) {
+  const { classes, order, orderBy, onRequestSort} = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -81,7 +77,6 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-   
         {headCells.map((headCell,index) => (
           <TableCell
             key={index}
@@ -108,14 +103,11 @@ function EnhancedTableHead(props) {
   );
 }
 
-EnhancedTableHead.propTypes = {
+SortableTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
 };
 
 const useToolbarStyles = makeStyles((theme) => ({
@@ -245,12 +237,13 @@ export default function EnhancedTable(data) {
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
+            stickyHeader
             className={classes.table}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
-            aria-label="enhanced table"
+            aria-label="sticky table"
           >
-            <EnhancedTableHead
+            <SortableTableHead
               classes={classes}
               numSelected={selected.length}
               order={order}
@@ -276,24 +269,18 @@ export default function EnhancedTable(data) {
                       key={index}
                       selected={isItemSelected}
                     >
-                        {Object.keys(row).map((key,idx)=>(
-                            <TableCell
-                                key={idx}
-                                style={{minWidth:'10em', padding:'10'}}
-                                component="th" 
-                                id={labelId} 
-                                scope="row" 
-                                align='center'
-                            >
-                                {row[key]}
-                            </TableCell>
-                        ))}
-        
-                      {/* row.map((value,idx) 
-                      
-                      ) */}
-                
-                
+                    {Object.keys(row).map((key,idx)=>(
+                        <TableCell
+                            key={idx}
+                            style={{minWidth:'10em', padding:'10'}}
+                            component="th" 
+                            id={labelId} 
+                            scope="row" 
+                            align='center'
+                    >
+                        {key == 'songReleaseDate' ?  row[key] :  row[key] }
+                        </TableCell>
+                    ))}
                     </TableRow>
                   );
                 })}
@@ -306,7 +293,7 @@ export default function EnhancedTable(data) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 25, 100]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
