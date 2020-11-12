@@ -12,7 +12,7 @@ class App extends Component {
           <Switch>
             <Route path="/" component={LandingPage} exact/>
             <Route path="/table" component={TablePage}/>
-              <Route component={Error}/>
+            <Route component={Error}/>
           </Switch>
         </div> 
       </BrowserRouter>

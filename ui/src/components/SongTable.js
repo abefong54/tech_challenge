@@ -12,40 +12,44 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 
+
+function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+}
+function getComparator(order, orderBy) {
+    return order === 'desc' ? (a, b) => descendingComparator(a, b, orderBy) : (a, b) => -descendingComparator(a, b, orderBy);
+}
+    
+function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+        const order = comparator(a[0], b[0]);
+        if (order !== 0) return order;
+            return a[1] - b[1];
+    });
+
+    return stabilizedThis.map((el) => el[0]);
+}
+
 export default function SongTable({songs}) {
+    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = songs;
     
     const useStyles = makeStyles({
         root: {
-        width: '100%',
+            width: '100%',
         },
-        container: {
-        maxHeight: 440,
+            container: {
+            maxHeight: 440,
         },
     });
 
     let data = songs
-
-    function createData(name, code, population, size) {
-        const density = population / size;
-        return { name, code, population, size, density };
-    }
-    const rows = [
-        createData('India', 'IN', 1324171354, 3287263),
-        createData('China', 'CN', 1403500365, 9596961),
-        createData('Italy', 'IT', 60483973, 301340),
-        createData('United States', 'US', 327167434, 9833520),
-        createData('Canada', 'CA', 37602103, 9984670),
-        createData('Australia', 'AU', 25475400, 7692024),
-        createData('Germany', 'DE', 83019200, 357578),
-        createData('Ireland', 'IE', 4857000, 70273),
-        createData('Mexico', 'MX', 126577691, 1972550),
-        createData('Japan', 'JP', 126317000, 377973),
-        createData('France', 'FR', 67022000, 640679),
-        createData('United Kingdom', 'GB', 67545757, 242495),
-        createData('Russia', 'RU', 146793744, 17098246),
-        createData('Nigeria', 'NG', 200962417, 923768),
-        createData('Brazil', 'BR', 210147125, 8515767),
-    ];
 
     const classes = useStyles();
     const [page, setPage] = useState(0);
@@ -58,7 +62,7 @@ export default function SongTable({songs}) {
     const handleChangeRowsPerPage = (event) => {
       setRowsPerPage(+event.target.value);
       setPage(0);
-    };
+    };    
     
     return (
         <Paper className={classes.root}>
@@ -69,56 +73,57 @@ export default function SongTable({songs}) {
                     </Button>
                 </Grid>
             </Grid>
-        <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                    <TableRow>
-                        {Object.keys(data[0]).map((item,index) => (
-                            <TableCell
-                                key={item.index}
-                                style={{ minWidth: '10em' }}
-                            >
-                            {item}
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                        return (
-                        <TableRow 
-                            hover 
-                            role="checkbox" 
-                            tabIndex={-1} 
-                            key={row.code}
-                        >
-                            {data.map((column) => {
-                            const value = row[column.id];
-                            return (
-                                <TableCell 
-                                    key={column.id} 
-                                    align={column.align}
+            <TableContainer className={classes.container}>
+                <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                        <TableRow>
+                            {Object.keys(data[0]).map((item,index) => (
+                                <TableCell
+                                    key={item.index}
+                                    align={"center"}
                                     style={{ minWidth: '10em' }}
                                 >
-                                    {column}
+                                {item}
                                 </TableCell>
-                            );
-                            })}
+                            ))}
                         </TableRow>
-                        );
-                    })}
-                </TableBody>
-            </Table>
-        </TableContainer>
-        <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-        /> 
+                    </TableHead>
+                    <TableBody>
+                        {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                            return (
+                            <TableRow 
+                                hover 
+                                role="checkbox" 
+                                tabIndex={-1} 
+                                key={row.code}
+                            >
+                            {Object.keys(row).map((column) => {
+                                const value = row['name'];
+                                return (
+                                    <TableCell 
+                                        key={column.name} 
+                                        align={"center"}
+                                        style={{ minWidth: '10em' }}
+                                    >
+                                        {row[column]}
+                                    </TableCell>
+                                );
+                            })} 
+                            </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[10, 25, 100]}
+                component="div"
+                count={data.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+            /> 
         </Paper>
     )
 };

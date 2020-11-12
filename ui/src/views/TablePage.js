@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import useSongFetch from '../hooks/GetSongList';
 import SongTable from '../components/SongTable';
+import SortableSongTable from '../components/SortableSongTable';
 
 
 function createData(name, code, population, size) {
@@ -17,7 +18,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   container: {
-    maxHeight: 440,
+    minHeight: 440,
   },
 });
 
@@ -29,12 +30,12 @@ export default function DataTable() {
   const { data } = useSongFetch(url);
 
   return (
-    
-    <div>
+    <div className={classes.container}>
     {(data.length > 0)
       ?  
-        <SongTable songs={data}/>
-        : "No Data"
+        <SortableSongTable songs={data}/>
+        : 
+        "Loading Data"
       }
     </div>
   );
