@@ -42,15 +42,15 @@ const TableTitleRow = styled.tr`
 
 const TableTitleRowCell = styled.th`
   /* Adapt the colors based on primary prop */
-  background: ${props => props.primary ? "palevioletred" : "white"};
-  color: ${props => props.primary ? "white" : "palevioletred"};
+  background: ${props => props.primary ? "black" : "white"};
+  color: ${props => props.primary ? "white" : "black"};
   text-decoration:none;
   font-size: 1.5em;
   align: center;
   margin: 1em;
   font-weight: bold; 
   padding: 0.25em 1em;
-  border: 6px solid palevioletred;
+  border: 6px solid black;
   border-radius: 4px;
 `;
 
@@ -63,7 +63,7 @@ const TableDataRow = styled.tr`
   margin: 1em;
   align: center;
   padding: 0.25em 1em;
-  border: 2px solid palevioletred;
+  border: 2px solid black;
   border-radius: 3px;
   overflow:scroll;
 
@@ -71,8 +71,8 @@ const TableDataRow = styled.tr`
 
 const TableDataRowCell = styled.td`
   /* Adapt the colors based on primary prop */
-  background: ${props => props.primary ? "palevioletred" : "white"};
-  color: ${props => props.primary ? "white" : "palevioletred"};
+  background: ${props => props.primary ? "black" : "white"};
+  color: ${props => props.primary ? "white" : "black"};
   text-decoration:none;
   font-size: 1em;
   margin: 1em;
@@ -85,13 +85,13 @@ const TableDataRowCell = styled.td`
 
 const Button = styled.button`
     /* Adapt the colors based on primary prop */
-    background: ${props => props.primary ? "white" : "palevioletred"};
-    color: ${props => props.primary ? "palevioletred" : "white"};
+    background: ${props => props.primary ? "white" : "red"};
+    color: ${props => props.primary ? "red" : "white"};
 
     font-size: 1em;
     margin: 1em;
     padding: 0.25em 1em;
-    border: 2px solid palevioletred;
+    border: 2px solid black;
     border-radius: 3px;
 `;
 
@@ -99,14 +99,8 @@ export default function BasicSongTable(props) {
     // HELPER FUNCTIONS
     const songs = props.songs;
     const columnNames = Object.keys(songs[0])
-    
     const { items, requestSort } = useSortTable(songs);
-    console.log("items")
-    console.log(items)
-    // debugger;
-
-
-
+    
     return (
         <div>
             <TableContainer>
@@ -123,7 +117,7 @@ export default function BasicSongTable(props) {
                         </TableTitleRow>
                     </TableBody>
                     <TableBody>
-                        {items.map((row,idx) => (
+                        {songs.map((row,idx) => (
                             <TableDataRow key={'data-row-'+idx}>
                             {columnNames.map(name => (
                                 <TableDataRowCell key={'data-row-'+name+'-'+idx}>

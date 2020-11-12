@@ -5,7 +5,7 @@ export default function  useSortTable (songs, config = null) {
 
     const sortedSongs = useMemo(() => {
 
-        let sortableList = [songs];
+        let sortableList = songs;
         
         console.log("sortConfig")
         console.log(sortConfig)
@@ -39,8 +39,10 @@ export default function  useSortTable (songs, config = null) {
     }, [songs, sortConfig]);
 
     const requestSort = key => {
+
+        console.log("key")
+        console.log(key)
         let direction = 'asc';
-        
         if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
             direction = 'desc';
         }
