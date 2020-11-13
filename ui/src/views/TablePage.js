@@ -1,7 +1,6 @@
 import React from 'react';
 import useSongFetch from '../hooks/GetSongs';
 import BasicSongTable from '../components/BasicSongTable';
-import SortableSongTable from '../components/SortableSongTable';
 
 
 export default function DataTable() {
