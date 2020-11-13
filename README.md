@@ -1,7 +1,7 @@
  # Abraham Fong - Music Lab - Code Challenge Submission
   React front end consuming Lambda deployed using AWS SAM CLI. 
 
-  After cloning the repository, run the **startup.sh** script to bring up the application. 
+   - Run the **startup.sh** script to bring up the application. 
 
   Alternatively, you can  navigate to the **/ui** directory and run the ***yarn start*** command.
     
