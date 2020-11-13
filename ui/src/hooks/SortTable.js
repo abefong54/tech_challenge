@@ -7,9 +7,6 @@ export default function  useSortTable (songs, config = null) {
 
         let sortableList = songs;
         
-        console.log("sortConfig")
-        console.log(sortConfig)
-        // debugger;
         if (sortConfig !== null) {
             sortableList.sort((a, b) => {
                 let x = a[sortConfig.key]
@@ -40,15 +37,12 @@ export default function  useSortTable (songs, config = null) {
 
     const requestSort = key => {
 
-        console.log("key")
-        console.log(key)
         let direction = 'asc';
         if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
             direction = 'desc';
         }
         setSortConfig({ key, direction });
     }
-    console.log("returning from hook")
-    console.log({ songs: sortedSongs[0] })
+    
     return { items: sortedSongs[0], requestSort };
 }

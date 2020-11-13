@@ -34,8 +34,8 @@ const CallToAction = styled.h5`
 
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
-  background: ${props => props.primary ? "palevioletred" : "white"};
-  color: ${props => props.primary ? "white" : "palevioletred"};
+  background: ${props => props.primary ? "red" : "white"};
+  color: ${props => props.primary ? "white" : "red"};
   text-decoration:none;
   font-size: 1em;
   margin: 1em;
@@ -55,7 +55,7 @@ export default function Album() {
           <CallToAction>
              You can explore musical metrics here
           </CallToAction>
-          <Button as="a" href="/table">explore</Button>
+          <Button as="a" href="/table">explore </Button>
         </LandingPageContainer>
       </div>
   );

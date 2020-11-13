@@ -74,7 +74,6 @@ const Button = styled.button`
     /* Adapt the colors based on primary prop */
     background: ${props => props.primary ? "white" : "red"};
     color: ${props => props.primary ? "red" : "white"};
-    box-shadow: none;
     margin: 1em;
     display: inline;
     padding: 0.25em 1em;
@@ -92,6 +91,8 @@ export default function BasicSongTable(props) {
     return (
         <div>
             <TableContainer>
+            
+                <Button style={{'textDecoration':'none'}} as="a" href="/">home</Button>
                 <Table>
                     <TableBody>
                         <TableTitleRow>
