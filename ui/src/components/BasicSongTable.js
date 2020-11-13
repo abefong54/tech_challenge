@@ -2,19 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import useSortTable from '../hooks/SortTable';
 
-
-// HELPER FUNCTIONS
-// function handleSorting(column) {
-//     // add a click event to all header (th) cells...
-//     console.log("column");
-//     console.log(column);
-//     // console.log(this.useState);
-//     // for the current table, find all rows (except the first)...
-//     // sort the rows, based on the value of the clicked column...
-//     // insert the rows back into the table, in the new order.
-// }
-
-
 // STYLE COMPONENTS
 const TableContainer = styled.section`
     width: '100%',
@@ -87,20 +74,21 @@ const Button = styled.button`
     /* Adapt the colors based on primary prop */
     background: ${props => props.primary ? "white" : "red"};
     color: ${props => props.primary ? "red" : "white"};
-
-    font-size: 1em;
+    box-shadow: none;
     margin: 1em;
+    display: inline;
     padding: 0.25em 1em;
     border: 2px solid black;
     border-radius: 3px;
 `;
 
 export default function BasicSongTable(props) {
-    // HELPER FUNCTIONS
+
     const songs = props.songs;
     const columnNames = Object.keys(songs[0])
+
     const { items, requestSort } = useSortTable(songs);
-    
+
     return (
         <div>
             <TableContainer>
@@ -110,7 +98,7 @@ export default function BasicSongTable(props) {
                         {columnNames.map((name,idx) => (
                             <TableTitleRowCell key={idx}>
                                 <Button onClick={()=> requestSort(name)}>
-                                    {name}
+                                    {name} ▼
                                 </Button>
                             </TableTitleRowCell>
                         ))}
