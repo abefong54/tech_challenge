@@ -1,3 +1,13 @@
+ # Abraham Fong - Music Lab - Code Challenge Submission
+  React front end consuming Lambda deployed using AWS SAM CLI. 
+  To view the UI, navigate to the **/ui** directory and run the ***yarn start*** command.
+  
+  note: running for the first time might require initial install of dependencies  using  
+  - yarn install 
+  
+  - cd ui
+  - yarn start
+ 
  # iHeartMedia - Music Lab - Code Challenge
 
 Create a React application that shows a list of songs with their information and metrics displayed. The app should have at least **2 pages (views)**:
