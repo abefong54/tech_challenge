@@ -1,11 +1,9 @@
  # Abraham Fong - Music Lab - Code Challenge Submission
   React front end consuming Lambda deployed using AWS SAM CLI. 
   To view the UI, navigate to the **/ui** directory and run the ***yarn start*** command.
-  
-  note: running for the first time might require initial install of dependencies  using  
-  - yarn install 
-  
+    
   - cd ui
+  - yarn install (optional) first time build might require initial install of dependencies  using  
   - yarn start
  
  # iHeartMedia - Music Lab - Code Challenge
